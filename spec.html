@@ -38422,14 +38422,22 @@ THH:mm:ss.sss
         <p>The `reject` function returns a new promise rejected with the passed argument.</p>
         <emu-alg>
           1. Let _C_ be the *this* value.
-          1. Let _promiseCapability_ be ? NewPromiseCapability(_C_).
-          1. Perform ? Call(_promiseCapability_.[[Reject]], *undefined*, &laquo; _r_ &raquo;).
-          1. Return _promiseCapability_.[[Promise]].
+          1. Return ? PromiseReject(_C_, _r_).
         </emu-alg>
         <p>This function is the <dfn>%Promise_reject%</dfn> intrinsic object.</p>
         <emu-note>
           <p>The `reject` function expects its *this* value to be a constructor function that supports the parameter conventions of the `Promise` constructor.</p>
         </emu-note>
+
+        <emu-clause id="sec-promise-reject" aiod="PromiseReject">
+          <h1>PromiseReject ( _C_, _r_ )</h1>
+          <p>The abstract operation PromiseResolve, given a constructor and a value, returns a new promise rejected with that value.</p>
+          <emu-alg>
+            1. Let _promiseCapability_ be ? NewPromiseCapability(_C_).
+            1. Perform ? Call(_promiseCapability_.[[Reject]], *undefined*, &laquo; _r_ &raquo;).
+            1. Return _promiseCapability_.[[Promise]].
+          </emu-alg>
+        </emu-clause>
       </emu-clause>
 
       <emu-clause id="sec-promise.resolve">
