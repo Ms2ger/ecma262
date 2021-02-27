@@ -3909,7 +3909,7 @@
         <h1>MakePrivateReference ( _baseValue_, _privateIdentifier_ )</h1>
         <emu-alg>
           1. Let _env_ be the running execution context's PrivateEnvironment.
-          1. Let _privateNameBinding_ be ? ResolveBinding(_privateIdentifier_, _env_).
+          1. Let _privateNameBinding_ be ! ResolveBinding(_privateIdentifier_, _env_).
           1. Let _privateName_ be ? GetValue(_privateNameBinding_).
           1. Assert: _privateName_ is a Private Name.
           1. Return the Reference Record { [[Base]]: _baseValue_, [[ReferencedName]]: _privateName_, [[Strict]]: *true*, [[ThisValue]]: ~empty~ }.
