@@ -4047,7 +4047,7 @@
 
     <emu-clause id="sec-privateelement-record-specification-type">
       <h1>The PrivateElement Record Specification Type</h1>
-      <p>The PrivateElement type is a Record used in the specification of private class fields, methods, and accessors.</p>
+      <p>The PrivateElement type is a Record used in the specification of private class fields, methods, and accessors. Although Property Descriptors are not used for private elements, private fields behave similarly to non-configurable, non-enumerable, writable data properties, private methods behave similarly to non-configurable, non-enumerable, non-writable data properties, and private accessors behave similarly to non-configurable, non-enumerable accessor properties.</p>
       <p>Values of the PrivateElement type are Record values whose fields are defined by <emu-xref href="#table-privateelement-fields"></emu-xref>. Such values are referred to as <dfn>PrivateElement Record</dfn>s.</p>
       <emu-table id="table-privateelement-fields" caption="PrivateElement Record Fields">
         <table>
@@ -21440,7 +21440,9 @@
       <h1>Runtime Semantics: ClassDefinitionEvaluation</h1>
       <p>With parameters _classBinding_ and _className_.</p>
       <emu-note>
-        <p>For ease of specification, private methods and accessors are included alongside private fields in the [[PrivateElements]] slot of class instances. However, any given object has either all or none of the private methods and accessors defined by a given class. Implementations may choose to implement these using a strategy which does not require tracking each method or accessor individually. This differs from private fields: because field initializers can throw during class instantiation, an individual object may have some proper subset of the private fields of a given class.</p>
+        <p>For ease of specification, private methods and accessors are included alongside private fields in the [[PrivateElements]] slot of class instances. However, any given object has either all or none of the private methods and accessors defined by a given class. This feature has been designed so that implementations may choose to implement private methods and accessors using a strategy which does not require tracking each method or accessor individually.</p>
+        <p>For example, an implementation could directly associate instance private methods with their corresponding Private Name and track, for each object, which class constructors have with run that object as their `this` value. Looking up an instance private method on an object then consists of checking that the class constructor which defines the method has been used to initialize the object, then returning the method associated with the Private Name.</p>
+        <p>This differs from private fields: because field initializers can throw during class instantiation, an individual object may have some proper subset of the private fields of a given class and so must in general be tracked individually.</p>
       </emu-note>
       <emu-grammar>ClassTail : ClassHeritage? `{` ClassBody? `}`</emu-grammar>
       <emu-alg>
