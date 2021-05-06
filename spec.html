@@ -9838,7 +9838,7 @@
             [[Names]]
           </td>
           <td>
-            List of Records of the form { [[Identifier]]: String, [[PrivateName]]: Private Name }.
+            List of PrivateEnvironmentEntry Records.
           </td>
           <td>
             The mapping of String values to Private Names.
@@ -9847,6 +9847,53 @@
         </tbody>
       </table>
     </emu-table>
+
+    <emu-clause id="sec-privateenvironmententry-records">
+      <h1>PrivateEnvironmentEntry Records</h1>
+      <p>A <dfn id="privateenvironment-record">PrivateEnvironmentEntry Record</dfn> is a specification mechanism used to associate a particular String value with a particular Private Name. Its sole use is for entries in the [[Names]] slot of PrivateEnvironment Records.</p>
+      <p>Each PrivateEnvironmentEntry Record has the fields defined in <emu-xref href="#table-privateenvironmententry-records"></emu-xref>.</p>
+      <emu-table id="table-privateenvironmententry-records" caption="PrivateEnvironmentEntry Record Fields">
+        <table>
+          <thead>
+          <tr>
+            <th>
+              Field Name
+            </th>
+            <th>
+              Value Type
+            </th>
+            <th>
+              Meaning
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>
+              [[Identifier]]
+            </td>
+            <td>
+              String
+            </td>
+            <td>
+              The String name of this private element.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              [[PrivateName]]
+            </td>
+            <td>
+              Private Name
+            </td>
+            <td>
+              The associated Private Name.
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </emu-table>
+    </emu-clause>
 
     <emu-clause id="sec-privateenvironment-record-operations">
       <h1>PrivateEnvironment Record Operations</h1>
@@ -9866,8 +9913,8 @@
         <p>The abstract operation ResolvePrivateIdentifier takes arguments _privEnv_ (a PrivateEnvironment Record) and _identifier_ (a String). It performs the following steps when called:</p>
         <emu-alg>
           1. Let _names_ be _privEnv_.[[Names]].
-          1. If _names_ contains a Record whose [[Identifier]] is _identifier_, then
-            1. Let _binding_ be that Record.
+          1. If _names_ contains a PrivateEnvironmentEntry Record whose [[Identifier]] is _identifier_, then
+            1. Let _binding_ be that PrivateEnvironmentEntry Record.
             1. Return _binding_.[[PrivateName]].
           1. Else,
             1. Let _outerPrivEnv_ be _privEnv_.[[OuterPrivEnv]].
@@ -21585,11 +21632,11 @@
         1. Let _classPrivateEnvironment_ be NewPrivateEnvironment(_outerPrivateEnvironment_).
         1. If |ClassBody_opt| is present, then
           1. For each String _dn_ of the PrivateBoundIdentifiers of |ClassBody_opt|, do
-            1. If _classPrivateEnvironment_.[[Names]] contains a Record whose [[Identifier]] is _dn_, then
+            1. If _classPrivateEnvironment_.[[Names]] contains a PrivateEnvironmentEntry Record whose [[Identifier]] is _dn_, then
               1. Assert: This is only possible for getter/setter pairs.
             1. Else,
               1. Let _name_ be NewPrivateName(_dn_).
-              1. Append the Record { [[Identifier]]: _dn_, [[PrivateName]]: _name_ } to _classPrivateEnvironment_.[[Names]].
+              1. Append the PrivateEnvironmentEntry Record { [[Identifier]]: _dn_, [[PrivateName]]: _name_ } to _classPrivateEnvironment_.[[Names]].
         1. If |ClassHeritage_opt| is not present, then
           1. Let _protoParent_ be %Object.prototype%.
           1. Let _constructorParent_ be %Function.prototype%.
